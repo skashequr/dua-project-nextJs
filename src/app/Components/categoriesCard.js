@@ -1,9 +1,13 @@
 'use client';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Accordion } from "keep-react";
+import { AuthContext } from '@/authprovidert/AuthProvider';
 export const CategoriesCard = () => {
   // Fetch data for categories from http://localhost:3000/api/categories
+        
+  const {categoryidContex , setCategoryidContex} = useContext(AuthContext)
+  // console.log(categoryidContex);
   const [categories ,setCategories] = useState(null);
   const [catNumber , setCatNumber] = useState(null);
   const [subcategories , setSubcatgories] =useState(null);
@@ -12,7 +16,7 @@ export const CategoriesCard = () => {
     .then((res) => res.json())
     .then((categories) => {
       setCategories(categories)
-      console.log(categories);
+      // console.log(categories);
       // ...
     })
     .catch((error) => {
@@ -24,7 +28,7 @@ export const CategoriesCard = () => {
     fetch(`http://localhost:5000/api/subcategories?cat_id=${catNumber}`)
       .then((res) => res.json())
       .then((subcategories) => {
-        console.log(subcategories);
+        // console.log(subcategories);
         // ...
         setSubcatgories(subcategories);
       })
@@ -36,7 +40,7 @@ export const CategoriesCard = () => {
   return (
     <div className='gap-3 rounded-lg p-3 flex flex-col' style={{ height: '590px', overflow: 'auto' }}>
       {categories?.categories?.map((category) => (
-        <div key={category?.id} onClick={()=>setCatNumber(category.cat_id)} >
+        <div key={category?.id} onClick={() => { setCatNumber(category.cat_id); setCategoryidContex(category.cat_id); }}>
           
          <div className="flex drop-shadow-md p-3  bg-[#E8F0F5]">
          <Image
