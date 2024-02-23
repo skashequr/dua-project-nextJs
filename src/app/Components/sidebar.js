@@ -5,7 +5,7 @@ import { Spinner } from "keep-react";
 const SideBar = () => {
   return (
     <div>
-      <aside class="flex flex-col items-center border border-x-cyan-950 p-5 w-28  py-8 overflow-y-auto bg-white border-r rtl:border-l rtl:border-r-0 dark:bg-gray-900 dark:border-gray-700">
+      <aside class="flex flex-col items-center border rounded-3xl p-5 w-28  py-8 overflow-y-auto bg-white border-r rtl:border-l rtl:border-r-0 dark:bg-gray-900 dark:border-gray-700">
         <nav class="flex flex-col flex-1 space-y-6">
           <div className="flex flex-col gap-20">
             <div>

@@ -1,7 +1,12 @@
 "use client";
+
+import { CategoriesCard } from "./categoriesCard";
+
 const Categories = () => {
   return (
-    <div className="bg-white">
+    <div >
+        <h2 className="mb-5 font-extrabold p-2 text-2xl">Dua Page</h2>
+      <div className="bg-white">
       <div className="p-4 bg-[#1FA45B] rounded rounded-t-md">
         <h6 className="text-center">Categories</h6>
       </div>
@@ -15,6 +20,10 @@ const Categories = () => {
         <button type="submit" class="absolute right-0 top-0 mt-5 mr-4">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 4a6 6 0 1 0 0 12 6 6 0 0 0 0-12zm-8 6a8 8 0 1 1 14.32 4.906l5.387 5.387a1 1 0 0 1-1.414 1.414l-5.387-5.387A8 8 0 0 1 2 10z" fill="#0D0D0D"/></svg>
         </button>
+      </div>
+      </div>
+      <div className="bg-white">
+        <CategoriesCard ></CategoriesCard>
       </div>
     </div>
   );

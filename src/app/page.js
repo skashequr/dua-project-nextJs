@@ -1,5 +1,6 @@
 
 import Categories from "./Components/categories";
+import Settings from "./Components/settings";
 import SideBar from "./Components/sidebar";
 
 export default function Home() {
@@ -15,8 +16,8 @@ export default function Home() {
       <div className="bg-black h-28 col-span-6">
 
       </div>
-      <div className="bg-black h-28 col-span-2">
-
+      <div className=" col-span-2">
+        <Settings></Settings>
       </div>
       </div>
     </main>
