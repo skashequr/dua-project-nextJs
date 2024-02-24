@@ -3,6 +3,12 @@ import "./globals.css";
 import Authprovider from "@/authprovidert/AuthProvider";
 // import { AuthContext } from "@/authprovidert/AuthProvider";
 
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query'
+const queryClient = new QueryClient()
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -13,9 +19,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+       {/* <QueryClientProvider client={queryClient}> */}
       <Authprovider>
       <body className={inter.className}>{children}</body>
       </Authprovider>
+      {/* </QueryClientProvider> */}
     </html>
   );
 }
