@@ -31,6 +31,7 @@ export const CategoriesCard = () => {
         .then((res) => res.json())
         .then((subcategories) => {
           setSubcategories(subcategories);
+          console.log(subcategories);
         })
         .catch((error) => {
           console.error("Error fetching subcategories:", error);
@@ -38,13 +39,30 @@ export const CategoriesCard = () => {
     }
   }, [catNumber]);
 
+  //Empliment search fetcher 
+  const {searchQurey} = useContext(AuthContext);
+  function searchCategories(searchQurey) {
+    // Convert the query to lowercase for case-insensitive search
+    const lowercaseQuery = searchQurey.toLowerCase();
+    
+    // Filter categories based on category name (English and Bengali) or category ID
+    const filteredCategories = categories?.categories?.filter(category => {
+      return category.cat_name_en.toLowerCase().includes(lowercaseQuery) ||
+             category.cat_name_bn.toLowerCase().includes(lowercaseQuery) ||
+             category.cat_id.toString() === lowercaseQuery;
+    });
+    console.log(filteredCategories);
+    return filteredCategories;
+  }
+  const filterQuery = searchCategories(searchQurey)
+
   return (
     <div
       className="gap-3 rounded-lg p-3 flex flex-col"
       style={{ height: "590px", overflow: "auto" }}
     >
       {/* Rendering categories data in accordion */}
-      {categories?.categories?.map((category) => (
+      {filterQuery?.map((category) => (
         <Accordion
           key={category?.id}
           className="w-[800px]"
@@ -77,7 +95,11 @@ export const CategoriesCard = () => {
               </Accordion.Title>
             </Accordion.Container>
             <Accordion.Content>
-              <Steps></Steps>
+              {
+                subcategories?.categories?.map((subcat) => (
+              <Steps key={subcat.id} subcat={subcat}></Steps>))
+              
+              }
             </Accordion.Content>
           </Accordion.Panel>
         </Accordion>
