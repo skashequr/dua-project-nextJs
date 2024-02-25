@@ -8,6 +8,7 @@ import { BsExclamationOctagon } from "react-icons/bs";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { AuthContext } from "@/authprovidert/AuthProvider";
+import { CgPlayStopO } from "react-icons/cg";
 const DuaCard = ({ props }) => {
   const Swal = require('sweetalert2')
   const click =e=>{
@@ -26,11 +27,33 @@ const DuaCard = ({ props }) => {
   let audio;
 
   const playSound = () => {
-    audio = new Audio(audioUrl);
-    audio.play();
-    setIsPlaying(true);
+    if (audioUrl) {
+      const audio = new Audio(audioUrl);
+      audio.addEventListener('canplaythrough', () => {
+        audio.play()
+          .then(() => {
+            setIsPlaying(true);
+          })
+          .catch(error => {
+            console.error('Error playing audio:', error);
+            // Handle error (e.g., display a message to the user)
+          });
+      });
+      audio.addEventListener('error', (error) => {
+        console.error('Error loading audio:', error);
+        // Handle error (e.g., display a message to the user)
+      });
+    }
   };
-
+  
+  const stopSound = () => {
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+      setIsPlaying(false);
+    }
+  };
+  
   const {catID} = useContext(AuthContext);
   console.log(catID);
   console.log(props);
@@ -73,8 +96,9 @@ const DuaCard = ({ props }) => {
       <span className="font-bold px-3">{props?.refference}</span>
 
       <div className="px-3 mt-2 flex items-center justify-between">
-        <div onClick={() => { playSound(); setAudioUrl(props?.audio); }} >
-          {props?.audio && <MdOutlinePlayCircleFilled className="h-8 w-8" />}
+        <div onClick={() => { setAudioUrl(props?.audio); setIsPlaying(!isPlaying)}} >
+          {   props?.audio && (isPlaying?<CgPlayStopO onClick={stopSound} className="h-8 w-8"/> : <MdOutlinePlayCircleFilled onClick={playSound}  className="h-8 w-8"/> )  //<MdOutlinePlayCircleFilled onClick={stopSound} className="h-8 w-8" />
+          }
         </div>
         <div className="flex justify-center items-center gap-7">
           <div onClick={click}>
