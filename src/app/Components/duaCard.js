@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import Image from "next/image";
 import { MdOutlinePlayCircleFilled } from "react-icons/md";
 import { IoCopyOutline } from "react-icons/io5";
@@ -7,6 +7,7 @@ import { CiShare2 } from "react-icons/ci";
 import { BsExclamationOctagon } from "react-icons/bs";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
+import { AuthContext } from "@/authprovidert/AuthProvider";
 const DuaCard = ({ props }) => {
   const Swal = require('sweetalert2')
   const click =e=>{
@@ -18,9 +19,23 @@ const DuaCard = ({ props }) => {
       timer: 1500
     });
   }
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [audioUrl , setAudioUrl] = useState("");
+  // const  = 'http://www.ihadis.com/duaaudiofinal/2.mp3';
+  console.log(audioUrl);
+  let audio;
+
+  const playSound = () => {
+    audio = new Audio(audioUrl);
+    audio.play();
+    setIsPlaying(true);
+  };
+
+  const {catID} = useContext(AuthContext);
+  console.log(catID);
   console.log(props);
   return (
-    <div className="relative w-full p-5 overflow-hidden mt-3 bg-white rounded-xl">
+    <div className="relative w-full p-5 overflow-hidden mt-3 bg-white rounded-xl" id={props.subcat_id}>
       <div className="flex items-center">
         <div>
           <Image
@@ -58,7 +73,7 @@ const DuaCard = ({ props }) => {
       <span className="font-bold px-3">{props?.refference}</span>
 
       <div className="px-3 mt-2 flex items-center justify-between">
-        <div>
+        <div onClick={() => { playSound(); setAudioUrl(props?.audio); }} >
           {props?.audio && <MdOutlinePlayCircleFilled className="h-8 w-8" />}
         </div>
         <div className="flex justify-center items-center gap-7">
